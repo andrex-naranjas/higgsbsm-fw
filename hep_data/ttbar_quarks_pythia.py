@@ -1,10 +1,5 @@
-
-#import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import math
 import pythia8
-
 
 pythia_ttbar=pythia8.Pythia()
 pythia_ttbar.readString("Top:gg2ttbar= on")
@@ -19,7 +14,6 @@ pythia_ttbar.readString("-24:onMode = off")
 pythia_ttbar.readString("-24:onIfMatch = 11 -12")
 pythia_ttbar.readString("-24:onIfMatch = 13 -14")
 pythia_ttbar.init()
-
 
 #**************LISTAS PARA BACKGROUND****************
 electron_px_bg = []
@@ -100,23 +94,7 @@ for i in range(num_events):
     
     bquark_encontrados = []
     antibquark_encontrados = []
-    '''
-    def find_ancestor(event, particle_idx, particle_id,target_id):
-        current_idx = particle_idx
-        while True:  # Continúa retrocediendo mientras haya madres
-            mother1 = event[current_idx].mother1()  # posicion de la madre principal
-            mother_particle = event[mother1]
-            
-            if mother_particle.id() == target_id:  # Comparamos el ID
-                return True  # Encontramos el ancestro buscado
-            
-            if event[mother1].id() != particle_id:
-                #print(event[mother1].id())
-                return False
-            
-            # Seguimos retrocediendo en la madre
-            current_idx = mother1    
-    '''  
+ 
     
     for particle in evento:
         madre1_posicion = particle.mother1() #POSICION EN VECTOR DE EVENTOS
