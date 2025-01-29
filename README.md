@@ -1,9 +1,9 @@
-# Bestest little higgs and machine learning framework
+## Bestest little Higgs and machine learning framework
 
 
 Code to simulate Higgs physics beyond the standard model with Pythia8
 
-## Framework installation
+### Framework installation
 
 To install the framework you need anaconda and git on a linux machine. In a terminal type:
 1. Clone the repository:
