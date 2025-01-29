@@ -8,6 +8,7 @@ import math
 pythia=pythia8.Pythia()
 pythia.readString("Higgs:useBSM = on")
 pythia.readString("HiggsBSM:ffbar2A3 = on")
+pythia.readString("36:onMode = off")
 pythia.readString("36:onIfMatch = 25 23")
 #pythia.readString("Beams:eCM = 100000")
 
@@ -68,7 +69,7 @@ cos_theta_hist =[]
 eta=[]
 contador=0
 
-num_events=5000
+num_events=10000
 for j in range(num_events):
     
     if not pythia.next():
@@ -167,7 +168,7 @@ for j in range(num_events):
                 
                     Z_px.append(Zboson_A0.px())
                     
-                    contador+=1
+                 
                     
                     #Hmass_squared = pow(quark_b.e() + antiquark_b.e(), 2) - pow(quark_b.px() + antiquark_b.px(), 2) - pow(quark_b.py() + antiquark_b.py(), 2) - pow(quark_b.pz() + antiquark_b.pz(), 2)
                     #Hmass = math.sqrt(Hmass_squared)
@@ -221,7 +222,7 @@ for j in range(num_events):
                     contador+=1
                     Z_px_m.append(Zboson_A0.px())
 
-
+print(len(anti_bquark_px_e), len(anti_bquark_px_m))
 # Crear DataFrame para electrones
 df_electrones = pd.DataFrame({
     'electron_px': electron_px,
