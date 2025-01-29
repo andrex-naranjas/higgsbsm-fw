@@ -1,4 +1,4 @@
-## Bestest little Higgs and machine learning framework
+## Bestest little Higgs and Machine learning framework
 
 
 Code to simulate Higgs physics beyond the standard model with Pythia8
