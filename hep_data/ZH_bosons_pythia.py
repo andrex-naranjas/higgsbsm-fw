@@ -1,9 +1,5 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 import pythia8
-import math
-
 
 pythia=pythia8.Pythia()
 pythia.readString("HiggsSM:ffbar2HZ = on")  #  ZH production via qqbar -> ZH
@@ -61,7 +57,6 @@ Z_px = []
 Z_px_m = []
 cos_theta_hist =[]
 eta=[]
-contador=0
 
 
 def find_ancestor(event, particle):
@@ -76,7 +71,7 @@ def find_ancestor(event, particle):
         current_idx = mother1_idx
     
 
-num_events=500
+num_events=100000
 for j in range(num_events):
     
     if not pythia.next():
@@ -93,7 +88,13 @@ for j in range(num_events):
             daughter1_Z = event[Z_boson.daughter1()]
             daughter2_Z = event[Z_boson.daughter2()]
 
-            if abs(daughter1_Z.id()) == 11 and abs(daughter2_Z.id()) == 11:        
+            if abs(daughter1_Z.id()) == 11 and abs(daughter2_Z.id()) == 11:  
+                  
+                mother_fermion_Z = find_ancestor(event, Z_boson)
+                Zboson_final = Z_boson
+                
+            if abs(daughter1_Z.id()) == 13 and abs(daughter2_Z.id()) == 13:  
+                  
                 mother_fermion_Z = find_ancestor(event, Z_boson)
                 Zboson_final = Z_boson
 
@@ -105,11 +106,11 @@ for j in range(num_events):
             if abs(daughter1_H.id()) == 5 and abs(daughter2_H.id()) == 5:
                 mother_fermion_H = find_ancestor(event, H_boson)
                 Hboson_final = H_boson
-
-    if mother_fermion_Z == mother_fermion_H and mother_fermion_Z != None: # check that Z and H come from same mother
-
-        Zboson_daughter1 = event[Zboson_final.daughter1()]
-        Zboson_daughter2 = event[Zboson_final.daughter2()]
+    
+    Zboson_daughter1 = event[Zboson_final.daughter1()]
+    Zboson_daughter2 = event[Zboson_final.daughter2()]
+    
+    if mother_fermion_Z == mother_fermion_H and mother_fermion_Z != None and abs(Zboson_daughter1.id()) == 11 and abs(Zboson_daughter2.id()) == 11: # check that Z and H come from same mother
 
         if Zboson_daughter1.id()==11:
             electron = Zboson_daughter1
@@ -158,10 +159,61 @@ for j in range(num_events):
         anti_bquark_py_e.append(antiquark_b.py()) 
         anti_bquark_pz_e.append(antiquark_b.pz())
         anti_bquark_e_e.append(antiquark_b.e())
+         
+    
+    if mother_fermion_Z == mother_fermion_H and mother_fermion_Z != None and abs(Zboson_daughter1.id()) == 13 and abs(Zboson_daughter2.id()) == 13: # check that Z and H come from same mother
 
+        if Zboson_daughter1.id()==13:
+            muon = Zboson_daughter1
+        elif Zboson_daughter2.id()==13:
+            muon = Zboson_daughter2
+
+        if Zboson_daughter1.id()==-13:
+            antimuon = Zboson_daughter1
+        elif Zboson_daughter2.id()==-13:
+            antimuon = Zboson_daughter2
+        
+        
+        Hboson_daughter1 = event[Hboson_final.daughter1()]
+        Hboson_daughter2 = event[Hboson_final.daughter2()]
+
+        # electron bottoms
+        if Hboson_daughter1.id()==5:
+            quark_b = Hboson_daughter1
+        elif Hboson_daughter2.id()==5:
+            quark_b= Hboson_daughter2
+                    
+        if Hboson_daughter1.id()==-5:
+            antiquark_b = Hboson_daughter1
+        elif Hboson_daughter2.id()==-5:
+            antiquark_b = Hboson_daughter2
+    
+        # electron kinematics
+        muon_px.append(muon.px())
+        muon_py.append(muon.py())
+        muon_pz.append(muon.pz())
+        muon_e.append(muon.e())
+                    
+        # positron kinematics 
+        antimuon_px.append(antimuon.px())
+        antimuon_py.append(antimuon.py())
+        antimuon_pz.append(antimuon.pz())
+        antimuon_e.append(antimuon.e())
+                    
+        # bquark - electron kinematics
+        bquark_px_m.append(quark_b.px())
+        bquark_py_m.append(quark_b.py()) 
+        bquark_pz_m.append(quark_b.pz()) 
+        bquark_e_m.append(quark_b.e())
+                    
+        # antibquark - electron kinematics
+        anti_bquark_px_m.append(antiquark_b.px()) 
+        anti_bquark_py_m.append(antiquark_b.py()) 
+        anti_bquark_pz_m.append(antiquark_b.pz())
+        anti_bquark_e_m.append(antiquark_b.e()) 
+        
 # end event generation
 pythia.stat()
-
 # electron data frame
 df_electrones = pd.DataFrame({
     'electron_px': electron_px,
@@ -184,3 +236,26 @@ df_electrones = pd.DataFrame({
 
 # save as csv
 df_electrones.to_csv('data_zh_electrons.csv', index=False) 
+
+
+df_muones = pd.DataFrame({
+    'muon_px': muon_px,
+    'muon_py': muon_py,
+    'muon_pz': muon_pz,
+    'muon_e': muon_e,
+    'antimuon_px': antimuon_px,
+    'antimuon_py': antimuon_py,
+    'antimuon_pz': antimuon_pz,
+    'antimuon_e': antimuon_e,
+    'bquark_px_m': bquark_px_m,
+    'bquark_py_m': bquark_py_m,
+    'bquark_pz_m': bquark_pz_m,
+    'bquark_e_m': bquark_e_m,
+    'anti_bquark_px_m': anti_bquark_px_m,
+    'anti_bquark_py_m': anti_bquark_py_m,
+    'anti_bquark_pz_m': anti_bquark_pz_m,
+    'anti_bquark_e_m': anti_bquark_e_m,
+})
+
+# save as csv
+df_muones.to_csv('data_zh_muons.csv', index=False)
