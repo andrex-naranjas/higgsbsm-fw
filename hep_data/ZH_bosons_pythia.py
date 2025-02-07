@@ -57,7 +57,6 @@ Z_px = []
 Z_px_m = []
 cos_theta_hist =[]
 eta=[]
-contador=0
 
 
 def find_ancestor(event, particle):
@@ -160,8 +159,7 @@ for j in range(num_events):
         anti_bquark_py_e.append(antiquark_b.py()) 
         anti_bquark_pz_e.append(antiquark_b.pz())
         anti_bquark_e_e.append(antiquark_b.e())
-        
-        contador+=1    
+         
     
     if mother_fermion_Z == mother_fermion_H and mother_fermion_Z != None and abs(Zboson_daughter1.id()) == 13 and abs(Zboson_daughter2.id()) == 13: # check that Z and H come from same mother
 
@@ -212,17 +210,10 @@ for j in range(num_events):
         anti_bquark_px_m.append(antiquark_b.px()) 
         anti_bquark_py_m.append(antiquark_b.py()) 
         anti_bquark_pz_m.append(antiquark_b.pz())
-        anti_bquark_e_m.append(antiquark_b.e())
+        anti_bquark_e_m.append(antiquark_b.e()) 
         
-        contador+=1    
-        
-    
-        
-        
-
 # end event generation
-print(contador)
-
+pythia.stat()
 # electron data frame
 df_electrones = pd.DataFrame({
     'electron_px': electron_px,
@@ -245,7 +236,6 @@ df_electrones = pd.DataFrame({
 
 # save as csv
 df_electrones.to_csv('data_zh_electrons.csv', index=False) 
-
 
 
 df_muones = pd.DataFrame({
