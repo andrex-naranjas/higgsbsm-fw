@@ -211,48 +211,44 @@ for i in range(num_events):
     else:
         print('ALGUNA LISTA VACÍA')
         
-print("Grupos de partículas bbll por evento:", contador)
-print("Grupos que además cumplen bbee, o bbmm", len(masasH_background_hist))
-
-
 df_electrones_bg = pd.DataFrame({
-    'electron_px_bg': electron_px_bg,
-    'electron_py_bg': electron_py_bg,
-    'electron_pz_bg': electron_pz_bg,
-    'electron_e_bg': electron_e_bg,
-    'positron_px_bg': positron_px_bg,
-    'positron_py_bg': positron_py_bg,
-    'positron_pz_bg': positron_pz_bg,
-    'positron_e_bg': positron_e_bg,
-    'bquark_px_e_bg': bquark_px_e_bg,
-    'bquark_py_e_bg': bquark_py_e_bg,
-    'bquark_pz_e_bg': bquark_pz_e_bg,
-    'bquark_e_e_bg': bquark_e_e_bg,
-    'anti_bquark_px_e_bg': anti_bquark_px_e_bg,
-    'anti_bquark_py_e_bg': anti_bquark_py_e_bg,
-    'anti_bquark_pz_e_bg': anti_bquark_pz_e_bg,
-    'anti_bquark_e_e_bg': anti_bquark_e_e_bg,
+    'electron_px': electron_px_bg,
+    'electron_py': electron_py_bg,
+    'electron_pz': electron_pz_bg,
+    'electron_e': electron_e_bg,
+    'positron_px': positron_px_bg,
+    'positron_py': positron_py_bg,
+    'positron_pz': positron_pz_bg,
+    'positron_e': positron_e_bg,
+    'quark_px_e': bquark_px_e_bg,
+    'quark_py_e': bquark_py_e_bg,
+    'quark_pz_e': bquark_pz_e_bg,
+    'quark_e_e': bquark_e_e_bg,
+    'anti_quark_px_e': anti_bquark_px_e_bg,
+    'anti_quark_py_e': anti_bquark_py_e_bg,
+    'anti_quark_pz_e': anti_bquark_pz_e_bg,
+    'anti_quark_e_e': anti_bquark_e_e_bg,
 })
 # Guardar como CSV
 df_electrones_bg.to_csv('data_electrons_bg_ttbar.csv', index=False) 
 
 df_muones_bg = pd.DataFrame({
-    'muon_px_bg': muon_px_bg,
-    'muon_py_bg': muon_py_bg,
-    'muon_pz_bg': muon_pz_bg,
-    'muon_e_bg': muon_e_bg,
-    'antimuon_px_bg': antimuon_px_bg,
-    'antimuon_py_bg': antimuon_py_bg,
-    'antimuon_pz_bg': antimuon_pz_bg,
-    'antimuon_e_bg': antimuon_e_bg,
-    'bquark_px_m_bg': bquark_px_m_bg,
-    'bquark_py_m_bg': bquark_py_m_bg,
-    'bquark_pz_m_bg': bquark_pz_m_bg,
-    'bquark_e_m_bg': bquark_e_m_bg,
-    'anti_bquark_px_m_bg': anti_bquark_px_m_bg,
-    'anti_bquark_py_m_bg': anti_bquark_py_m_bg,
-    'anti_bquark_pz_m_bg': anti_bquark_pz_m_bg,
-    'anti_bquark_e_m_bg': anti_bquark_e_m_bg,
+    'muon_px': muon_px_bg,
+    'muon_py': muon_py_bg,
+    'muon_pz': muon_pz_bg,
+    'muon_e': muon_e_bg,
+    'antimuon_px': antimuon_px_bg,
+    'antimuon_py': antimuon_py_bg,
+    'antimuon_pz': antimuon_pz_bg,
+    'antimuon_e': antimuon_e_bg,
+    'quark_px_m': bquark_px_m_bg,
+    'quark_py_m': bquark_py_m_bg,
+    'quark_pz_m': bquark_pz_m_bg,
+    'quark_e_m': bquark_e_m_bg,
+    'anti_quark_px_m': anti_bquark_px_m_bg,
+    'anti_quark_py_m': anti_bquark_py_m_bg,
+    'anti_quark_pz_m': anti_bquark_pz_m_bg,
+    'anti_quark_e_m': anti_bquark_e_m_bg,
 })
 
 df_muones_bg.to_csv('data_muons_bg_ttbar.csv', index=False)
