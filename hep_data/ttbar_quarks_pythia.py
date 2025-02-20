@@ -84,7 +84,7 @@ for i in range(num_events):
     if not pythia_ttbar.next():
         continue
     
-    evento = pythia_ttbar.event
+    event = pythia_ttbar.event
     
     leptones_minus_W_encontrados = []
     leptones_plus_W_encontrados = []
@@ -96,37 +96,37 @@ for i in range(num_events):
     antibquark_encontrados = []
  
     
-    for particle in evento:
-        madre1_posicion = particle.mother1() #POSICION EN VECTOR DE EVENTOS
-        madre1_particula = evento[madre1_posicion] #TIPO PARTÍCULA
+    for particle in event:
+        madre1_posicion = particle.mother1() #POSICION EN VECTOR DE EVENTS
+        madre1_particula = event[madre1_posicion] #TIPO PARTÍCULA
         madre1_id = madre1_particula.id() #ID
         
-        madre2_posicion = particle.mother2() #POSICION EN VECTOR DE EVENTOS
-        madre2_particula = evento[madre2_posicion] #TIPO PARTÍCULA
+        madre2_posicion = particle.mother2() #POSICION EN VECTOR DE EVENTS
+        madre2_particula = event[madre2_posicion] #TIPO PARTÍCULA
         madre2_id = madre2_particula.id() #ID
         
-        abuela_id = evento[madre1_particula.mother1()].id()
+        abuela_id = event[madre1_particula.mother1()].id()
         
         if particle.id() == 11 and madre1_id==-24:
-            hijo_top, madre = find_ancestor(evento, madre1_posicion, -24,-6)
+            hijo_top, madre = find_ancestor(event, madre1_posicion, -24,-6)
             if hijo_top: 
                 leptones_minus_W_encontrados.append(particle)
                 posicion_ancestro_lm.append(madre)
         
         if particle.id() == -11 and madre1_id == 24:
-            hijo_top, madre = find_ancestor(evento, madre1_posicion, 24,6)
+            hijo_top, madre = find_ancestor(event, madre1_posicion, 24,6)
             if hijo_top:
                 leptones_plus_W_encontrados.append(particle)
                 posicion_ancestro_lp.append(madre)
         
         if particle.id() == 13 and madre1_id==-24:
-            hijo_top, madre = find_ancestor(evento, madre1_posicion, -24,-6)
+            hijo_top, madre = find_ancestor(event, madre1_posicion, -24,-6)
             if hijo_top:
                 leptones_minus_W_encontrados.append(particle)
                 posicion_ancestro_lm.append(madre)
         
         if particle.id() == -13 and madre1_id==24:            
-            hijo_top, madre = find_ancestor(evento, madre1_posicion, 24,6)
+            hijo_top, madre = find_ancestor(event, madre1_posicion, 24,6)
             if hijo_top:
                 leptones_plus_W_encontrados.append(particle)
                 posicion_ancestro_lp.append(madre)
@@ -138,7 +138,7 @@ for i in range(num_events):
             antibquark_encontrados.append(particle)
         
     if len(leptones_minus_W_encontrados)>1 or len(leptones_plus_W_encontrados) >1 or len(bquark_encontrados) >1 or len(antibquark_encontrados)>1:
-        print('EVENTO EXTRAÑO ENCONTRADO')
+        print('EVENT EXTRAÑO ENCONTRADO')
     elif len(leptones_minus_W_encontrados)==1 and len(leptones_plus_W_encontrados)==1 and len(bquark_encontrados)==1 and len(antibquark_encontrados) == 1:
         lepton_plus = leptones_plus_W_encontrados[0]
         lepton_minus = leptones_minus_W_encontrados[0] #TIPO PARTÍCULAS, NO POSICIÓN
@@ -151,25 +151,25 @@ for i in range(num_events):
         if posi_abuela_lm == antibquark.mother1() and posi_abuela_lp == bquark.mother1():
             contador+=1
             if lepton_plus.id()==-11 and lepton_minus.id()==11:
-            # variables cinemáticas electrón
+                # variables cinemáticas electrón
                 electron_px_bg.append(lepton_minus.px())
                 electron_py_bg.append(lepton_minus.py())
                 electron_pz_bg.append(lepton_minus.pz())
                 electron_e_bg.append(lepton_minus.e())
                 
-                #variables cinemáticas positrón   
+                # variables cinemáticas positrón   
                 positron_px_bg.append(lepton_plus.px())
                 positron_py_bg.append(lepton_plus.py())
                 positron_pz_bg.append(lepton_plus.pz())
                 positron_e_bg.append(lepton_plus.e())
                 
-                #variables cinemáticas de los b quarks asociados a electrones
+                # variables cinemáticas de los b quarks asociados a electrones
                 bquark_px_e_bg.append(bquark.px())
                 bquark_py_e_bg.append(bquark.py()) 
                 bquark_pz_e_bg.append(bquark.pz()) 
                 bquark_e_e_bg.append(bquark.e())
                 
-                    #variables cinemáticas de los anti b quarks asociados a electrones
+                # variables cinemáticas de los anti b quarks asociados a electrones
                 anti_bquark_px_e_bg.append(antibquark.px()) 
                 anti_bquark_py_e_bg.append(antibquark.py()) 
                 anti_bquark_pz_e_bg.append(antibquark.pz())
@@ -180,25 +180,25 @@ for i in range(num_events):
                 masasA0_background_hist.append((bquark.p() + antibquark.p() + lepton_plus.p() + lepton_minus.p()).mCalc())
             
             if lepton_plus.id()==-13 and lepton_minus.id()==13:
-            #variables cinemáticas muon  
+                # variables cinemáticas muon  
                 muon_px_bg.append(lepton_minus.px())
                 muon_py_bg.append(lepton_minus.py())
                 muon_pz_bg.append(lepton_minus.pz())
                 muon_e_bg.append(lepton_minus.e())
                 
-                #variables cinemáticas antimuon
+                # variables cinemáticas antimuon
                 antimuon_px_bg.append(lepton_plus.px())
                 antimuon_py_bg.append(lepton_plus.py())
                 antimuon_pz_bg.append(lepton_plus.pz())
                 antimuon_e_bg.append(lepton_plus.e())
                 
-                #variables cinemáticas de los b quarks asociados a muones
+                # variables cinemáticas de los b quarks asociados a muones
                 bquark_px_m_bg.append(bquark.px())
                 bquark_py_m_bg.append(bquark.py()) 
                 bquark_pz_m_bg.append(bquark.pz()) 
                 bquark_e_m_bg.append(bquark.e())
                 
-                    #variables cinemáticas de los anti b quarks asociados a muones
+                # variables cinemáticas de los anti b quarks asociados a muones
                 anti_bquark_px_m_bg.append(antibquark.px()) 
                 anti_bquark_py_m_bg.append(antibquark.py()) 
                 anti_bquark_pz_m_bg.append(antibquark.pz())
@@ -211,48 +211,47 @@ for i in range(num_events):
     else:
         print('ALGUNA LISTA VACÍA')
         
-print("Grupos de partículas bbll por evento:", contador)
-print("Grupos que además cumplen bbee, o bbmm", len(masasH_background_hist))
-
+#print("Grupos de partículas bbll por event:", contador)
+#print("Grupos que además cumplen bbee, o bbmm", len(masasH_background_hist))
 
 df_electrones_bg = pd.DataFrame({
-    'electron_px_bg': electron_px_bg,
-    'electron_py_bg': electron_py_bg,
-    'electron_pz_bg': electron_pz_bg,
-    'electron_e_bg': electron_e_bg,
-    'positron_px_bg': positron_px_bg,
-    'positron_py_bg': positron_py_bg,
-    'positron_pz_bg': positron_pz_bg,
-    'positron_e_bg': positron_e_bg,
-    'bquark_px_e_bg': bquark_px_e_bg,
-    'bquark_py_e_bg': bquark_py_e_bg,
-    'bquark_pz_e_bg': bquark_pz_e_bg,
-    'bquark_e_e_bg': bquark_e_e_bg,
-    'anti_bquark_px_e_bg': anti_bquark_px_e_bg,
-    'anti_bquark_py_e_bg': anti_bquark_py_e_bg,
-    'anti_bquark_pz_e_bg': anti_bquark_pz_e_bg,
-    'anti_bquark_e_e_bg': anti_bquark_e_e_bg,
+    'electron_px': electron_px_bg,
+    'electron_py': electron_py_bg,
+    'electron_pz': electron_pz_bg,
+    'electron_e': electron_e_bg,
+    'positron_px': positron_px_bg,
+    'positron_py': positron_py_bg,
+    'positron_pz': positron_pz_bg,
+    'positron_e': positron_e_bg,
+    'quark_px': bquark_px_e_bg,
+    'quark_py': bquark_py_e_bg,
+    'quark_pz': bquark_pz_e_bg,
+    'quark_e': bquark_e_e_bg,
+    'anti_quark_px': anti_bquark_px_e_bg,
+    'anti_quark_py': anti_bquark_py_e_bg,
+    'anti_quark_pz': anti_bquark_pz_e_bg,
+    'anti_quark_e': anti_bquark_e_e_bg,
 })
 # Guardar como CSV
-df_electrones_bg.to_csv('data_electrons_bg_ttbar.csv', index=False) 
+df_electrones_bg.to_csv('mc_ttbar_electrons.csv', index=False) 
 
 df_muones_bg = pd.DataFrame({
-    'muon_px_bg': muon_px_bg,
-    'muon_py_bg': muon_py_bg,
-    'muon_pz_bg': muon_pz_bg,
-    'muon_e_bg': muon_e_bg,
-    'antimuon_px_bg': antimuon_px_bg,
-    'antimuon_py_bg': antimuon_py_bg,
-    'antimuon_pz_bg': antimuon_pz_bg,
-    'antimuon_e_bg': antimuon_e_bg,
-    'bquark_px_m_bg': bquark_px_m_bg,
-    'bquark_py_m_bg': bquark_py_m_bg,
-    'bquark_pz_m_bg': bquark_pz_m_bg,
-    'bquark_e_m_bg': bquark_e_m_bg,
-    'anti_bquark_px_m_bg': anti_bquark_px_m_bg,
-    'anti_bquark_py_m_bg': anti_bquark_py_m_bg,
-    'anti_bquark_pz_m_bg': anti_bquark_pz_m_bg,
-    'anti_bquark_e_m_bg': anti_bquark_e_m_bg,
+    'muon_px': muon_px_bg,
+    'muon_py': muon_py_bg,
+    'muon_pz': muon_pz_bg,
+    'muon_e': muon_e_bg,
+    'antimuon_px': antimuon_px_bg,
+    'antimuon_py': antimuon_py_bg,
+    'antimuon_pz': antimuon_pz_bg,
+    'antimuon_e': antimuon_e_bg,
+    'quark_px': bquark_px_m_bg,
+    'quark_py': bquark_py_m_bg,
+    'quark_pz': bquark_pz_m_bg,
+    'quark_e': bquark_e_m_bg,
+    'anti_quark_px': anti_bquark_px_m_bg,
+    'anti_quark_py': anti_bquark_py_m_bg,
+    'anti_quark_pz': anti_bquark_pz_m_bg,
+    'anti_quark_e': anti_bquark_e_m_bg,
 })
 
-df_muones_bg.to_csv('data_muons_bg_ttbar.csv', index=False)
+df_muones_bg.to_csv('mc_ttbar_muons.csv', index=False)

@@ -155,8 +155,8 @@ for j in range(num_events):
         bquark_e_e.append(quark_b.e())
                     
         # antibquark - electron kinematics
-        anti_bquark_px_e.append(antiquark_b.px()) 
-        anti_bquark_py_e.append(antiquark_b.py()) 
+        anti_bquark_px_e.append(antiquark_b.px())
+        anti_bquark_py_e.append(antiquark_b.py())
         anti_bquark_pz_e.append(antiquark_b.pz())
         anti_bquark_e_e.append(antiquark_b.e())
          
@@ -172,7 +172,6 @@ for j in range(num_events):
             antimuon = Zboson_daughter1
         elif Zboson_daughter2.id()==-13:
             antimuon = Zboson_daughter2
-        
         
         Hboson_daughter1 = event[Hboson_final.daughter1()]
         Hboson_daughter2 = event[Hboson_final.daughter2()]
@@ -224,19 +223,18 @@ df_electrones = pd.DataFrame({
     'positron_py': positron_py,
     'positron_pz': positron_pz,
     'positron_e': positron_e,
-    'bquark_px_e': bquark_px_e,
-    'bquark_py_e': bquark_py_e,
-    'bquark_pz_e': bquark_pz_e,
-    'bquark_e_e': bquark_e_e,
-    'anti_bquark_px_e': anti_bquark_px_e,
-    'anti_bquark_py_e': anti_bquark_py_e,
-    'anti_bquark_pz_e': anti_bquark_pz_e,
-    'anti_bquark_e_e': anti_bquark_e_e,
+    'quark_px': bquark_px_e,
+    'quark_py': bquark_py_e,
+    'quark_pz': bquark_pz_e,
+    'quark_e': bquark_e_e,
+    'anti_quark_px': anti_bquark_px_e,
+    'anti_quark_py': anti_bquark_py_e,
+    'anti_quark_pz': anti_bquark_pz_e,
+    'anti_quark_e': anti_bquark_e_e,
 })
 
 # save as csv
-df_electrones.to_csv('data_zh_electrons.csv', index=False) 
-
+df_electrones.to_csv('mc_zllhbb_electrons.csv', index=False)
 
 df_muones = pd.DataFrame({
     'muon_px': muon_px,
@@ -247,15 +245,15 @@ df_muones = pd.DataFrame({
     'antimuon_py': antimuon_py,
     'antimuon_pz': antimuon_pz,
     'antimuon_e': antimuon_e,
-    'bquark_px_m': bquark_px_m,
-    'bquark_py_m': bquark_py_m,
-    'bquark_pz_m': bquark_pz_m,
-    'bquark_e_m': bquark_e_m,
-    'anti_bquark_px_m': anti_bquark_px_m,
-    'anti_bquark_py_m': anti_bquark_py_m,
-    'anti_bquark_pz_m': anti_bquark_pz_m,
-    'anti_bquark_e_m': anti_bquark_e_m,
+    'quark_px': bquark_px_m,
+    'quark_py': bquark_py_m,
+    'quark_pz': bquark_pz_m,
+    'quark_e': bquark_e_m,
+    'anti_quark_px': anti_bquark_px_m,
+    'anti_quark_py': anti_bquark_py_m,
+    'anti_quark_pz': anti_bquark_pz_m,
+    'anti_quark_e': anti_bquark_e_m,
 })
 
 # save as csv
-df_muones.to_csv('data_zh_muons.csv', index=False)
+df_muones.to_csv('mc_zllhbb_muons.csv', index=False)

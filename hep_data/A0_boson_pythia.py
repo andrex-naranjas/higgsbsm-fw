@@ -63,33 +63,23 @@ anti_bquark_py_m = []
 anti_bquark_pz_m = []
 anti_bquark_e_m = []
 
-Z_px = []
-Z_px_m = []
-cos_theta_hist =[]
-eta=[]
-contador=0
-
 num_events=10000
 for j in range(num_events):
     
     if not pythia.next():
         continue
     
-    evento = pythia.event
-    for particle in evento:
-        if particle.id() == 111:
-          #  cos_theta = (particle.pz())/np.sqrt((pow(particle.px(),2) + pow(particle.py(),2) + pow(particle.pz(),2)))
-            cos_theta_hist.append(particle.phi())
-            
+    event = pythia.event
+    for particle in event:            
         mother=particle.mother1()
-        madre_id=evento[mother].id()
+        madre_id=event[mother].id()
         mother2=particle.mother2()
-        madre2_id=evento[mother2].id()
+        madre2_id=event[mother2].id()
         
         if particle.id() == 36: #A0
             
-            daughter1_A0 = evento[particle.daughter1()]
-            daughter2_A0 = evento[particle.daughter2()]
+            daughter1_A0 = event[particle.daughter1()]
+            daughter2_A0 = event[particle.daughter2()]
             
             if (abs(daughter1_A0.id()) == 23 or abs(daughter1_A0.id()) == 25) and (abs(daughter2_A0.id()) == 23 or abs(daughter2_A0.id()) == 25) :
                 #acomodar H y Z
@@ -105,14 +95,14 @@ for j in range(num_events):
                     Hboson_A0 = daughter2_A0
                 
                 #Hijas de Higgs
-                daughter1_H = evento[Hboson_A0.daughter1()]
-                daughter2_H = evento[Hboson_A0.daughter2()]
+                daughter1_H = event[Hboson_A0.daughter1()]
+                daughter2_H = event[Hboson_A0.daughter2()]
                 Hdecay_ok = False
                 if abs(daughter1_H.id()) == 5 and abs(daughter2_H.id()) == 5:
                     Hdecay_ok = True
                 #Hijas de Z
-                daughter1_Z = evento[Zboson_A0.daughter1()]
-                daughter2_Z = evento[Zboson_A0.daughter2()]
+                daughter1_Z = event[Zboson_A0.daughter1()]
+                daughter2_Z = event[Zboson_A0.daughter2()]
                 
                 if abs(daughter1_Z.id()) == 11 and abs(daughter2_Z.id()) == 11 and Hdecay_ok:
                    #acomodar electrones
@@ -160,19 +150,7 @@ for j in range(num_events):
                     anti_bquark_py_e.append(antiquark_b.py()) 
                     anti_bquark_pz_e.append(antiquark_b.pz())
                     anti_bquark_e_e.append(antiquark_b.e())
-                    
-                    #cos_theta = (Zboson_A0.pz())/(Zboson_A0.px() + Zboson_A0.py() + Zboson_A0.pz())
-                    #cos_theta = (Zboson_A0.pz())/np.sqrt((pow(Zboson_A0.px(),2) + pow(Zboson_A0.py(),2) + pow(Zboson_A0.pz(),2)))
-                    #cos_theta_hist.append(particle.eta())
-                    #cos_theta_hist.append(cos_theta)
-                
-                    Z_px.append(Zboson_A0.px())
-                    
-                 
-                    
-                    #Hmass_squared = pow(quark_b.e() + antiquark_b.e(), 2) - pow(quark_b.px() + antiquark_b.px(), 2) - pow(quark_b.py() + antiquark_b.py(), 2) - pow(quark_b.pz() + antiquark_b.pz(), 2)
-                    #Hmass = math.sqrt(Hmass_squared)
-                    
+
                 if abs(daughter1_Z.id()) == 13 and abs(daughter2_Z.id()) == 13 and Hdecay_ok:
                    #acomodar muones
                     if daughter1_Z.id()==13:
@@ -208,22 +186,19 @@ for j in range(num_events):
                     antimuon_pz.append(antimuon.pz())
                     antimuon_e.append(antimuon.e())
                     
-                    #variables cinemáticas de los b quarks asociados a muones
+                    # kinematic variables for muon b quarks
                     bquark_px_m.append(quark_b.px())
                     bquark_py_m.append(quark_b.py()) 
                     bquark_pz_m.append(quark_b.pz()) 
                     bquark_e_m.append(quark_b.e())
                     
-                     #variables cinemáticas de los anti b quarks asociados a muones
+                     # kinematic variables for muon for anti b quarks
                     anti_bquark_px_m.append(antiquark_b.px()) 
                     anti_bquark_py_m.append(antiquark_b.py()) 
                     anti_bquark_pz_m.append(antiquark_b.pz())
                     anti_bquark_e_m.append(antiquark_b.e())
-                    contador+=1
-                    Z_px_m.append(Zboson_A0.px())
 
-print(len(anti_bquark_px_e), len(anti_bquark_px_m))
-# Crear DataFrame para electrones
+# create DataFrame for electrons
 df_electrones = pd.DataFrame({
     'electron_px': electron_px,
     'electron_py': electron_py,
@@ -233,21 +208,19 @@ df_electrones = pd.DataFrame({
     'positron_py': positron_py,
     'positron_pz': positron_pz,
     'positron_e': positron_e,
-    'bquark_px_e': bquark_px_e,
-    'bquark_py_e': bquark_py_e,
-    'bquark_pz_e': bquark_pz_e,
-    'bquark_e_e': bquark_e_e,
-    'anti_bquark_px_e': anti_bquark_px_e,
-    'anti_bquark_py_e': anti_bquark_py_e,
-    'anti_bquark_pz_e': anti_bquark_pz_e,
-    'anti_bquark_e_e': anti_bquark_e_e,
-    'Z_boson_px_e': Z_px
+    'quark_px': bquark_px_e,
+    'quark_py': bquark_py_e,
+    'quark_pz': bquark_pz_e,
+    'bquark_e': bquark_e_e,
+    'anti_quark_px': anti_bquark_px_e,
+    'anti_quark_py': anti_bquark_py_e,
+    'anti_quark_pz': anti_bquark_pz_e,
+    'anti_quark_e': anti_bquark_e_e
 })
-# Guardar como CSV
-df_electrones.to_csv('dataframe_electrones.csv', index=False) 
-        
+# save file as CSV
+df_electrones.to_csv('mc_A0HbbZll_electrons.csv', index=False)
 
-# Crear DataFrame para muones
+# create DataFrame for muons
 df_muones = pd.DataFrame({
     'muon_px': muon_px,
     'muon_py': muon_py,
@@ -257,23 +230,15 @@ df_muones = pd.DataFrame({
     'antimuon_py': antimuon_py,
     'antimuon_pz': antimuon_pz,
     'antimuon_e': antimuon_e,
-    'bquark_px_m': bquark_px_m,
-    'bquark_py_m': bquark_py_m,
-    'bquark_pz_m': bquark_pz_m,
-    'bquark_e_m': bquark_e_m,
-    'anti_bquark_px_m': anti_bquark_px_m,
-    'anti_bquark_py_m': anti_bquark_py_m,
-    'anti_bquark_pz_m': anti_bquark_pz_m,
-    'anti_bquark_e_m': anti_bquark_e_m,
-    'Z_boson_px_m': Z_px_m
+    'quark_px': bquark_px_m,
+    'quark_py': bquark_py_m,
+    'quark_pz': bquark_pz_m,
+    'quark_e': bquark_e_m,
+    'anti_quark_px': anti_bquark_px_m,
+    'anti_quark_py': anti_bquark_py_m,
+    'anti_quark_pz': anti_bquark_pz_m,
+    'anti_quark_e': anti_bquark_e_m
 })
 
-# Guardar como CSV
-df_muones.to_csv('dataframe_muones.csv', index=False)
-
-plt.hist(cos_theta_hist, bins=50, range=(-1, 1), alpha=0.75, color='green', label='pi0 Cos theta')
-plt.xlabel("pi0 Cos theta")
-plt.ylabel("Events")
-plt.title("Cosine of theta of pi0")
-plt.legend()
-plt.show()
+# save file as CSV
+df_muones.to_csv('mc_A0HbbZll_muons.csv', index=False)
